@@ -4,6 +4,8 @@ import com.example.kotlintest.model.User
 import com.example.kotlintest.repository.UserRepository
 import com.example.kotlintest.dto.UserCreateRequestDto
 import com.example.kotlintest.mapper.toResponseDto
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -33,5 +35,14 @@ class UserService(
 
     fun deleteUser(id: Long) {
         userRepository.deleteById(id)
+    }
+
+    //페이징 추가
+    fun getUsersPage(pageable: Pageable): Page<User> {
+        return userRepository.findAll(pageable)
+    }
+
+    fun searchUserByName(name: String, pageable: Pageable): Page<User> {
+        return userRepository.findByNameContainingIgnoreCase(name, pageable)
     }
 }
