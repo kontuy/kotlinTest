@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test0630  # 오타: loalhost → localhost
+    username: taeuk                                  # 콜론(:) 뒤에 공백 추가
+    password:                                         # 비번 없으면 그냥 비워두면 됨
+
+  jpa:
+    hibernate:
+      ddl-auto: update                                # 콜론(:) 뒤에 공백 추가
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
