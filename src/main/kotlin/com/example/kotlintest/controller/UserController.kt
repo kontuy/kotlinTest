@@ -13,7 +13,7 @@ import jakarta.validation.Valid
 class UserController(
     private val userService: UserService  // ✅ 오타 수정
 ) {
-
+ 
     @GetMapping
     fun getAllUsers(): List<UserResponseDto> =
         userService.getAllUsers().map { it.toResponseDto() }
@@ -22,10 +22,12 @@ class UserController(
     fun getUserById(@PathVariable id: Long): User? =
         userService.getUserById(id)  // ✅ 인스턴스 사용
 
-    @PostMapping
-    fun createUser(@Valid @RequestBody dto: UserCreateRequestDto): UserResponseDto {
-        val savedUser = userService.createUser(dto)
-        return savedUser.toResponseDto()
+    @PostMapping("/batch")
+    fun createUsers(@RequestBody dtos: List<UserCreateRequestDto>): List<UserResponseDto> {
+        return dtos.map { dto ->
+            val saved = userService.createUser(dto)
+            saved.toResponseDto()
+        }
     }
 
     @PutMapping("/{id}")
